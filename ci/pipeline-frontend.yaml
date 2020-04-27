@@ -1,0 +1,210 @@
+---
+resource_types:
+- name: slack-alert
+  type: registry-image
+  source:
+    repository: arbourd/concourse-slack-alert-resource
+- name: pull-request
+  type: registry-image
+  source:
+    repository: teliaoss/github-pr-resource
+resources:
+  - name: pull-request
+    type: pull-request
+    source:
+      repository: git@github.com:Improwised/hydra-webui.git
+      paths:
+      - web
+      access_token: b85a3789ea67df98ef0d78226daa9a9577da6517
+  - name: hydra-web-ui
+    type: git
+    source:
+      uri: git@github.com:Improwised/hydra-webui.git
+      branch: develop
+      paths:
+      - web
+      private_key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        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
+        -----END RSA PRIVATE KEY-----
+  - name: hydra-web-ui-image
+    type: docker-image
+    source:
+      email: {{docker-hub-email}}
+      username: {{docker-hub-username}}
+      password: {{docker-hub-password}}
+      repository: improwised/hydra-web-ui
+      # build_args:
+      #   BUILD_TYPE: staging
+  # - name: notify
+  #   type: slack-alert
+  #   source:
+  #     url: https://hooks.slack.com/services/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
+  #     concourse_url: https://ci.improwised.dev
+  - name: oci-build-task
+    type: registry-image
+    source:
+      repository: vito/oci-build-task
+jobs:
+  - name: test
+    serial: true
+    # on_success:
+    #   put: notify
+    #   params:
+    #     alert_type: success
+    #     message: test cases were executed successfully
+    # on_failure:
+    #   put: notify
+    #   params:
+    #     alert_type: failed
+    #     message: test cases failed to succeed
+    # on_error:
+    #   put: notify
+    #   params:
+    #     alert_type: failed
+    #     message: test cases failed to succeed
+    # on_abort:
+    #   put: notify
+    #   params:
+    #     alert_type: aborted
+    #     message: running test cases were aborted
+    plan:
+      - get: pull-request
+        trigger: true
+        version: every
+      - put: pull-request
+        params:
+          path: pull-request
+          status: pending
+      # - put: notify
+      #   params:
+      #     alert_type: started
+      #     message: pull request made, will run test cases now
+      - task: run-test-cases
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: { repository: node, tag: "12-alpine" }
+          inputs:
+            - name: pull-request
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd pull-request/web
+                npm install
+                npm run test
+        on_failure:
+          put: pull-request
+          params:
+            path: pull-request
+            status: failure
+      - put: pull-request
+        params:
+          path: pull-request
+          status: success
+  - name: build
+    serial: true
+    # on_success:
+    #   put: notify
+    #   params:
+    #     alert_type: success
+    # on_failure:
+    #   put: notify
+    #   params:
+    #     alert_type: failed
+    # on_error:
+    #   put: notify
+    #   params:
+    #     alert_type: failed
+    # on_abort:
+    #   put: notify
+    #   params:
+    #     alert_type: aborted
+    plan:
+      - in_parallel:
+        - get: oci-build-task
+        # - put: notify
+        #   params:
+        #     alert_type: started
+        - get: hydra-web-ui
+          trigger: true
+          params:
+            depth: 1
+            short_ref_format: develop-%s
+      - task: build
+        privileged: true
+        image: oci-build-task
+        attempts: 2
+        config:
+          platform: linux
+          params:
+            CONTEXT: hydra-web-ui/web
+            # DOCKERFILE: hydra-web-ui/web/Dockerfile
+            BUILD_ARG_BUILD_TYPE: staging
+          inputs:
+            - name: hydra-web-ui
+          outputs:
+            - name: image
+          run:
+            path: build
+          # caches:
+          # - path: cache
+      - put: hydra-web-ui-image
+        attempts: 3
+        params:
+          # build: hydra-web-ui # it will build image probably so avoid that
+          image: image/image.tar
+          # load: image/image.tar # open image/image.tar/image: not a directory
+          import_file: image/image.tar
+          additional_tags: hydra-web-ui/.git/short_ref
