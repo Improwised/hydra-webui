@@ -1,0 +1,78 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:12-alpine
+    # networks:
+    #   - new
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hydra
+    ports:
+      - 5432:5432
+    # volumes:
+    #   - database_postgres:/var/lib/postgresql/data:rw
+
+  # web:
+  #   build:
+  #     context: web/.
+  #     args:
+  #       BUILD_TYPE: docker
+  #   ports:
+  #     - "3000:80"
+  #   depends_on:
+  #     - hydra
+  #   links:
+  #     - hydra
+  #   environment:
+  #     - HYDRA_ADMIN_URL=http://hydra:4445
+  #     - PUBLIC_URL=http://hydra:4444
+
+  hydra-migrate:
+    image: oryd/hydra:1.4.8
+    links:
+      - db:db
+    depends_on:
+      - db
+    # networks:
+    #   - intranet
+    restart: on-failure
+    environment:
+      - DSN=postgres://postgres:postgres@db:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
+      - LOG_LEVEL=debug
+      - HYDRA_SYSTEM_SECRET=youReallyNeedToChangeThis
+    command:
+      migrate sql -e --yes
+    
+  hydra:
+    image: oryd/hydra:1.4.8
+    restart: unless-stopped
+    ports:
+      - "4444:4444" # Public port
+      - "4445:4445" # Admin port
+      - "5555:5555" # Port for hydra token user
+    depends_on:
+      - db
+      - hydra-migrate
+    environment:
+      - URLS_SELF_ISSUER=http://127.0.0.1:4444
+      - DSN=postgres://postgres:postgres@db:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
+      - SECRETS_SYSTEM=youReallyNeedToChangeThis
+      - OIDC_SUBJECT_IDENTIFIERS_SUPPORTED_TYPES=public,pairwise
+      - OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT=youReallyNeedToChangeThis
+      # - URLS_CONSENT=http://127.0.0.1:3000/consent
+      # - URLS_LOGIN=http://127.0.0.1:3000/login
+      # - URLS_LOGOUT=http://127.0.0.1:3000/logout
+    command:
+      serve all --dangerous-force-http
+
+#
+# volumes:
+#   database_postgres:
+#     driver: local
+#   app_data:
+#     driver: local
+
+# networks:
+#   new:
