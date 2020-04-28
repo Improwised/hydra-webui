@@ -1,0 +1,159 @@
+---
+resource_types:
+- name: slack-alert
+  type: registry-image
+  source:
+    repository: arbourd/concourse-slack-alert-resource
+- name: pull-request
+  type: registry-image
+  source:
+    repository: teliaoss/github-pr-resource
+resources:
+  - name: pull-request
+    type: pull-request
+    source:
+      repository: git@github.com:Improwised/hydra-webui.git
+      paths:
+      - web
+      access_token: {{access_token}}
+  - name: hydra-web-ui
+    type: git
+    source:
+      uri: git@github.com:Improwised/hydra-webui.git
+      branch: develop
+      paths:
+      - web
+      private_key: {{private_key}}
+  - name: hydra-web-ui-image
+    type: docker-image
+    source:
+      email: {{docker-hub-email}}
+      username: {{docker-hub-username}}
+      password: {{docker-hub-password}}
+      repository: improwised/hydra-web-ui
+      # build_args:
+      #   BUILD_TYPE: staging
+  # - name: notify
+  #   type: slack-alert
+  #   source:
+  #     url: https://hooks.slack.com/services/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
+  #     concourse_url: https://ci.improwised.dev
+  - name: oci-build-task
+    type: registry-image
+    source:
+      repository: vito/oci-build-task
+jobs:
+  - name: test
+    serial: true
+    # on_success:
+    #   put: notify
+    #   params:
+    #     alert_type: success
+    #     message: test cases were executed successfully
+    # on_failure:
+    #   put: notify
+    #   params:
+    #     alert_type: failed
+    #     message: test cases failed to succeed
+    # on_error:
+    #   put: notify
+    #   params:
+    #     alert_type: failed
+    #     message: test cases failed to succeed
+    # on_abort:
+    #   put: notify
+    #   params:
+    #     alert_type: aborted
+    #     message: running test cases were aborted
+    plan:
+      - get: pull-request
+        trigger: true
+        version: every
+      - put: pull-request
+        params:
+          path: pull-request
+          status: pending
+      # - put: notify
+      #   params:
+      #     alert_type: started
+      #     message: pull request made, will run test cases now
+      - task: run-test-cases
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: { repository: node, tag: "12-alpine" }
+          inputs:
+            - name: pull-request
+          run:
+            path: /bin/sh
+            args:
+              - -c
+              - |
+                cd pull-request/web
+                npm install
+                npm run test
+        on_failure:
+          put: pull-request
+          params:
+            path: pull-request
+            status: failure
+      - put: pull-request
+        params:
+          path: pull-request
+          status: success
+  - name: build
+    serial: true
+    # on_success:
+    #   put: notify
+    #   params:
+    #     alert_type: success
+    # on_failure:
+    #   put: notify
+    #   params:
+    #     alert_type: failed
+    # on_error:
+    #   put: notify
+    #   params:
+    #     alert_type: failed
+    # on_abort:
+    #   put: notify
+    #   params:
+    #     alert_type: aborted
+    plan:
+      - in_parallel:
+        - get: oci-build-task
+        # - put: notify
+        #   params:
+        #     alert_type: started
+        - get: hydra-web-ui
+          trigger: true
+          params:
+            depth: 1
+            short_ref_format: develop-%s
+      - task: build
+        privileged: true
+        image: oci-build-task
+        attempts: 2
+        config:
+          platform: linux
+          params:
+            CONTEXT: hydra-web-ui/web
+            # DOCKERFILE: hydra-web-ui/web/Dockerfile
+            BUILD_ARG_BUILD_TYPE: staging
+          inputs:
+            - name: hydra-web-ui
+          outputs:
+            - name: image
+          run:
+            path: build
+          # caches:
+          # - path: cache
+      - put: hydra-web-ui-image
+        attempts: 3
+        params:
+          # build: hydra-web-ui # it will build image probably so avoid that
+          image: image/image.tar
+          # load: image/image.tar # open image/image.tar/image: not a directory
+          import_file: image/image.tar
+          additional_tags: hydra-web-ui/.git/short_ref
