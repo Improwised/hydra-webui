@@ -61,6 +61,7 @@ services:
       - SECRETS_SYSTEM=youReallyNeedToChangeThis
       - OIDC_SUBJECT_IDENTIFIERS_SUPPORTED_TYPES=public,pairwise
       - OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT=youReallyNeedToChangeThis
+      - SERVE_ADMIN_CORS_ENABLED=true
       # - URLS_CONSENT=http://127.0.0.1:3000/consent
       # - URLS_LOGIN=http://127.0.0.1:3000/login
       # - URLS_LOGOUT=http://127.0.0.1:3000/logout
