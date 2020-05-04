@@ -14,20 +14,21 @@ services:
     # volumes:
     #   - database_postgres:/var/lib/postgresql/data:rw
 
-  # web:
-  #   build:
-  #     context: web/.
-  #     args:
-  #       BUILD_TYPE: docker
-  #   ports:
-  #     - "3000:80"
-  #   depends_on:
-  #     - hydra
-  #   links:
-  #     - hydra
-  #   environment:
-  #     - HYDRA_ADMIN_URL=http://hydra:4445
-  #     - PUBLIC_URL=http://hydra:4444
+  web:
+    build:
+      context: web/.
+      args:
+        BUILD_TYPE: docker
+    ports:
+      - "3000:80"
+    depends_on:
+      - hydra
+    links:
+      - hydra
+    environment:
+      - HYDRA_ADMIN_URL=http://hydra:4445
+      - PUBLIC_URL=http://hydra:4444
+      - API_URL=http://hydra:4445
 
   hydra-migrate:
     image: oryd/hydra:1.4.8
