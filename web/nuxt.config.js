@@ -43,8 +43,12 @@ export default {
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
-    '@nuxtjs/proxy'
-
+    '@nuxtjs/proxy',
+    ['nuxt-env', {
+      keys: [
+        { key: 'API_URL', default: 'http://localhost:4445' } // Specify a default value
+      ]
+    }]
   ],
   /*
    ** environment variables

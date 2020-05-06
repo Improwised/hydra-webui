@@ -1,7 +1,7 @@
 import { request } from "../store/api";
 export default {
   getClientList({ commit }) {
-    return request(this.$axios, "get", `/clients`)
+    return request(this.$axios, "get", `${this.$env.API_URL}/clients`)
       .then(response => {
         commit('clients', response);
       })
@@ -10,8 +10,8 @@ export default {
       });
   },
   addClient({ dispatch }, data) {
-    return request(this.$axios, "post", `/clients`, data);
+    return request(this.$axios, "post", `${this.$env.API_URL}/clients`, data);
   },
   deleteClient({ dispatch }, data) {
-    return request(this.$axios, 'delete', `/clients/${data}`);
+    return request(this.$axios, 'delete', `${this.$env.API_URL}/clients/${data}`);
   },};
