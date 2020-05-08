@@ -28,8 +28,8 @@ RUN npm install
 # # Bundle app source
 COPY . /usr/src/app
 
-ARG BUILD_TYPE
-COPY .env.$BUILD_TYPE /usr/src/app/.env
+# ARG BUILD_TYPE
+# COPY .env.$BUILD_TYPE /usr/src/app/.env
 
 RUN npm run build
 
