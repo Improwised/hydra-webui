@@ -1,5 +1,5 @@
 
-export default {
+module.exports = {
   mode: 'universal',
   /*
   ** Headers of the page
@@ -62,13 +62,16 @@ export default {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
-    baseURL: 'http://localhost:4445',
+    baseURL: 'http://localhost:3000',
     retry: true,
-    // proxy:true
+    proxy:true
   },
 
   proxy: {
-    '/api/': { target: 'http://localhost:4445', pathRewrite: {'^/api/': '/'} }
+    '/clients': 'http://localhost:4445',
+  },
+  router: {
+    base: '/hydra' || ''
   },
   /*
   ** Build configuration
