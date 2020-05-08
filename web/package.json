@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
+    "build": " node server.js nuxt build",
+    "start": "cross-env NODE_ENV=production node server.js",
     "generate": "nuxt generate",
     "test": "jest"
   },
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-jest": "^24.1.0",
+    "cross-env": "^7.0.2",
     "jest": "^24.1.0",
     "vue-jest": "^4.0.0-0"
   }
