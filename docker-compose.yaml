@@ -1,10 +1,10 @@
-version: '3'
+version: '2'
 
 services:
   db:
     image: postgres:12-alpine
-    # networks:
-    #   - new
+    networks:
+      - hydra-net
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -21,10 +21,14 @@ services:
       #   BUILD_TYPE: docker
     ports:
       - "3000:80"
-    depends_on:
-      - hydra
+    networks:
+      - hydra-net
+    # depends_on:
+    #   - hydra
     links:
       - hydra
+    command:
+      /usr/src/app API_URL=http://hydra:4445 node server.js
     environment:
       # - HYDRA_ADMIN_URL=http://hydra:4445
       # - PUBLIC_URL=http://hydra:4444
@@ -36,8 +40,8 @@ services:
       - db:db
     depends_on:
       - db
-    # networks:
-    #   - intranet
+    networks:
+      - hydra-net
     restart: on-failure
     environment:
       - DSN=postgres://postgres:postgres@db:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
@@ -56,6 +60,8 @@ services:
     depends_on:
       - db
       - hydra-migrate
+    networks:
+      - hydra-net
     environment:
       - URLS_SELF_ISSUER=http://127.0.0.1:4444
       - DSN=postgres://postgres:postgres@db:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
@@ -76,5 +82,5 @@ services:
 #   app_data:
 #     driver: local
 
-# networks:
-#   new:
+networks:
+  hydra-net:
