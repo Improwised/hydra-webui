@@ -1,46 +1,83 @@
 export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
+  /*
+   ** Headers of the page
+   */
   head: {
-    title: 'hydra-web',
-    htmlAttrs: {
-      lang: 'en',
-    },
+    title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: process.env.npm_package_description || '',
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-
-  // Global CSS: https://go.nuxtjs.dev/config-css
+  /*
+   ** Customize the progress-bar color
+   */
+  loading: { color: '#fff' },
+  /*
+   ** Global CSS
+   */
   css: [],
-
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
-
-  // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
-
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
-    // https://go.nuxtjs.dev/stylelint
-    '@nuxtjs/stylelint-module',
+  /*
+   ** Plugins to load before mounting the App
+   */
+  plugins: [
+    '~/plugins/axios',
+    { src: '~/plugins/modules-with-no-ssr', ssr: false },
   ],
-
-  // Modules: https://go.nuxtjs.dev/config-modules
+  /*
+   ** Nuxt.js dev-modules
+   */
+  buildModules: [],
+  /*
+   ** Nuxt.js modules
+   */
   modules: [
-    // https://go.nuxtjs.dev/bootstrap
+    // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
+    [
+      'nuxt-env',
+      {
+        keys: [
+          { key: 'API_URL', default: 'http://localhost:4445' }, // Specify a default value
+        ],
+      },
+    ],
   ],
+  /*
+   ** environment variables
+   */
+  env: {
+    base: process.env.BASE_URL,
+  },
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  /*
+   ** Axios module configuration
+   */
+  axios: {
+    proxy: true,
+  },
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  proxy: {
+    '/clients': process.env.HYDRA_PROXY_URL,
+  },
+  router: {
+    base: '/hydra' || '',
+  },
+  /*
+   ** Build configuration
+   */
+  build: {
+    /*
+     ** You can extend webpack config here
+     */
+    extend(config, ctx) {},
+  },
 }
