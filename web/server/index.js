@@ -4,7 +4,7 @@ const port = process.env.PORT || 3000
 
 const app = require('express')()
 // We instantiate Nuxt.js with the options
-const config = require('./nuxt.config.js')
+const config = require('../nuxt.config.js')
 config.proxy = {
   '/clients': URL,
 }
