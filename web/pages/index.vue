@@ -1,30 +1,32 @@
 <template>
   <div class="container">
-    <div class="header">
-      <p class="title">
-        <img
-          src="../assets/images/banner_hydra.png"
-          alt="Smiley face"
-          height="74"
-          width="361"
-        />
-      </p>
-    </div>
-    <div class="body">
-      <div class="sub-header">
-        <p>Client List</p>
-      </div>
+    <b-card
+      class="custom-card w-100 mb-4"
+      header-tag="header"
+      header-class="custom-header dfaisb bb-1"
+      body-class="custom-body p-0"
+      footer-tag="footer"
+      footer-class="custom-footer bt-1"
+    >
+      <template #header>
+        <h6 class="mb-0 fsfwcb">Client List</h6>
+        <Add />
+      </template>
       <List></List>
-    </div>
+    </b-card>
   </div>
 </template>
 
 <script>
-import List from '../components/List/Index.vue'
+import List from '@/components/List/Table.vue'
+import Add from '@/components/List/Add.vue'
+
 export default {
   components: {
     List,
+    Add,
   },
+  layout: 'client',
   async asyncData({ store }) {
     await store.dispatch('getClientList')
     return {}
@@ -46,13 +48,19 @@ export default {
 .header {
   height: 80px;
 }
-.sub-header {
-  height: 64px;
-  padding: 17px;
+.fsfwcb {
   font-size: 24px;
   font-weight: 500;
   color: #004084;
-  border-bottom: 1px solid;
-  margin-top: -1px;
+}
+.btn {
+  float: right;
+}
+.del-btn {
+  background: #c21c2d;
+}
+.btn .add-btn {
+  background: #004085;
+  font-weight: bold;
 }
 </style>

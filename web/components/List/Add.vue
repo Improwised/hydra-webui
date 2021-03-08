@@ -1,11 +1,10 @@
 <template>
   <div>
-    <b-toast id="example-toast" title="BootstrapVue" static no-auto-hide
-      >Hello, world! This is a toast message.</b-toast
+    <b-button v-b-modal.add-model class="add-btn" variant="primary"
+      >Create Client</b-button
     >
-    <b-button v-b-modal.add-model class="add-btn">Create Client</b-button>
     <b-modal id="add-model" ref="modal" title="Add Client" @ok="addModal">
-      <form ref="form" @submit.prevent="add">
+      <form ref="form">
         <b-form-group
           label="Client Owner"
           label-for="name-input"

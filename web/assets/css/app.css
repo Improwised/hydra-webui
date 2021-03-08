@@ -1,0 +1,127 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
+
+
+/* ====== google material icon style - end ====== */
+
+.pos-rel {
+    position: relative;
+  }
+  
+  .pos-stk-top {
+    top: 0;
+    position: sticky;
+  }
+  
+  .pos-stk-bottom {
+    bottom: 0;
+    position: sticky;
+  }
+  
+  .bb-1 {
+    border-bottom: 1px solid #e1e5eb;
+  }
+  
+  .bt-1 {
+    border-top: 1px solid #e1e5eb;
+  }
+  
+  .br-1 {
+    border-right: 1px solid #e1e5eb;
+  }
+  
+  .bl-1 {
+    border-left: 1px solid #e1e5eb;
+  }
+  
+  .pad-1 {
+    padding: 0.5rem 1rem;
+  }
+  
+  .pad-2 {
+    padding: 1rem;
+  }
+  
+  .padx-2 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .pad-item {
+    padding: 0.5rem;
+  }
+  
+  .mar-1 {
+    margin: 0.5rem 1rem;
+  }
+  
+  .bg-light {
+    background-color: #fbfbfb !important;
+  }
+  
+  .strong {
+    font-weight: bold;
+  }
+  
+  .fs-1 {
+    font-size: 0.9rem;
+  }
+  
+  .fs-2 {
+    font-size: 0.875rem;
+  }
+  
+  .ws-nw {
+    white-space: nowrap;
+  }
+  
+  .wb-ba {
+    word-break: break-all;
+  }
+  
+  .dfaic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .dfaisb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .w-33 {
+    width: 33%;
+  }
+
+/* ====== custom card style - start ====== */
+.custom-card {
+    border: none;
+    background-color: #fff;
+    border-radius: 0.625rem;
+    box-shadow: 0 2px 0 rgba(90, 97, 105, 0.11), 0 4px 8px rgba(90, 97, 105, 0.12),
+      0 10px 10px rgba(90, 97, 105, 0.06), 0 7px 70px rgba(90, 97, 105, 0.1);
+  }
+  
+  .custom-card .custom-header {
+    box-shadow: none;
+    padding: 1rem 1rem;
+    border-radius: 0.625rem 0.625rem 0 0;
+    background-color: white;
+  }
+  
+  .custom-card > .custom-body {
+    border-radius: 0.625rem 0.625rem 0 0;
+  }
+  
+  .custom-card .custom-header + .custom-body {
+    border-radius: 0 0;
+  }
+  
+  .custom-card .custom-footer {
+    box-shadow: none;
+    border-radius: 0 0 0.625rem 0.625rem;
+    padding: 1rem 1rem;
+    background-color: white;
+  }

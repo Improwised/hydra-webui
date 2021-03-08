@@ -41,22 +41,7 @@ export default {
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
-    [
-      'nuxt-env',
-      {
-        keys: [
-          { key: 'API_URL', default: 'http://localhost:4445' }, // Specify a default value
-        ],
-      },
-    ],
   ],
-  /*
-   ** environment variables
-   */
-  env: {
-    base: process.env.BASE_URL,
-  },
 
   /*
    ** Axios module configuration
@@ -68,6 +53,7 @@ export default {
   proxy: {
     '/clients': process.env.HYDRA_PROXY_URL,
   },
+
   router: {
     base: '/hydra' || '',
   },

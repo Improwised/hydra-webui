@@ -3,8 +3,8 @@ export default {
     async addClient(data) {
       try {
         await this.$store.dispatch('addClient', data)
-        await this.$store.dispatch('getClientList')
-        this.$toasted.success('Client Added Successfully', {
+        // await this.$store.dispatch('getClientList')
+        await this.$toasted.success('Client Added Successfully', {
           theme: 'bubble',
           position: 'top-right',
           duration: 5000,

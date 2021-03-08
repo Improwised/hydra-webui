@@ -1,38 +1,7 @@
 <template>
   <div>
-    <div class="btn">
-      <Add></Add>
-    </div>
     <!-- list table -->
-    <b-container fluid>
-      <!-- User Interface controls -->
-      <b-row style="margin-top: 11px">
-        <!-- <b-col lg="6" class="my-1"> -->
-        <b-form-group
-          label="Filter"
-          label-cols-sm="3"
-          label-align-sm="left"
-          label-size="sm"
-          label-for="filterInput"
-          class="mb-0"
-        >
-          <b-input-group size="sm">
-            <b-form-input
-              id="filterInput"
-              v-model="filter"
-              type="search"
-              placeholder="Type to Search"
-            ></b-form-input>
-            <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''"
-                >Clear</b-button
-              >
-            </b-input-group-append>
-          </b-input-group>
-        </b-form-group>
-        <!-- </b-col> -->
-      </b-row>
-
+    <b-container class="mt-3" fluid>
       <b-table
         :items="items"
         :fields="fields"
@@ -45,7 +14,8 @@
         <template #cell(Action)="row">
           <b-button
             size="sm"
-            class="mr-1 del-btn"
+            variant="danger"
+            class="mr-3"
             @click="delBtn(row.item, row.index, $event.target)"
             >Delete</b-button
           >
@@ -75,11 +45,7 @@
 </template>
 <script>
 import deleteClient from '@/mixins/delete.js'
-import Add from '../Actions/Add.vue'
 export default {
-  components: {
-    Add,
-  },
   mixins: [deleteClient],
   data() {
     return {
@@ -130,7 +96,6 @@ export default {
         },
         {
           key: 'Action',
-          sortable: true,
         },
       ],
       bordered: true,
@@ -154,15 +119,3 @@ export default {
   },
 }
 </script>
-<style>
-.btn {
-  float: right;
-}
-.del-btn {
-  background: #c21c2d;
-}
-.btn .add-btn {
-  background: #004085;
-  font-weight: bold;
-}
-</style>

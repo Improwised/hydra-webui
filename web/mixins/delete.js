@@ -3,7 +3,7 @@ export default {
     async deleteClient(data) {
       try {
         await this.$store.dispatch('deleteClient', data)
-        await this.$store.dispatch('getClientList')
+        // await this.$store.dispatch('getClientList')
         this.$toasted.success('Client Deleted Successfully', {
           theme: 'bubble',
           position: 'top-right',
