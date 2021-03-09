@@ -14,7 +14,3 @@ export default {
   },
 }
 </script>
-
-<style>
-@import '@/assets/css/app.css';
-</style>

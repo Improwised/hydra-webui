@@ -31,14 +31,13 @@
         <pre>Are you sure you want to delete ? </pre>
       </b-modal>
     </b-container>
-    <div>
+    <div class="text-center">
       <b-pagination
         v-model="currentPage"
         :total-rows="totalRows"
         :per-page="perPage"
-        align="fill"
         size="sm"
-        class="my-0"
+        align="center"
       ></b-pagination>
     </div>
   </div>
