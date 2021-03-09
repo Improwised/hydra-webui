@@ -1,63 +1,36 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">hydra-web</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div class="p-3">
+    <b-card
+      class="border-0 shadow w-100 mb-4 rounded-lg"
+      header-tag="header"
+      header-class="d-flex justify-content-between align-items-center"
+      header-bg-variant="transparent"
+      body-class="custom-body p-0"
+      footer-tag="footer"
+      footer-class="custom-footer bt-1"
+    >
+      <template #header>
+        <h3 class="mb-0 text-danger">Client List</h3>
+        <Add />
+      </template>
+      <List></List>
+    </b-card>
   </div>
 </template>
 
 <script>
-export default {}
+import List from '@/components/List/Table.vue'
+import Add from '@/components/List/Add.vue'
+
+export default {
+  components: {
+    List,
+    Add,
+  },
+  layout: 'client',
+  async asyncData({ store }) {
+    await store.dispatch('getClientList')
+    return {}
+  },
+}
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>

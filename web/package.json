@@ -7,8 +7,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
-    "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
+    "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore . --fix",
+    "lint:style": "stylelint \"**/*.{vue,css}\" --fix --ignore-path .gitignore",
     "lint": "npm run lint:js && npm run lint:style",
     "test": "jest"
   },
@@ -48,6 +48,7 @@
     "stylelint": "^13.9.0",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
-    "vue-jest": "^3.0.4"
+    "vue-jest": "^3.0.4",
+    "vue-toasted": "^1.1.28"
   }
 }
