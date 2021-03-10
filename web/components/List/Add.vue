@@ -3,27 +3,24 @@
     <b-button v-b-modal.add-model class="add-btn" variant="primary"
       >Create Client</b-button
     >
-    <b-modal id="add-model" ref="modal" title="Add Client" @ok="addModal">
-      <form ref="form">
-        <b-form-group
-          label="Client Owner"
-          label-for="name-input"
-          invalid-feedback="owner is required"
-        >
+    <b-modal id="add-model" ref="modal" hide-footer title="Add Client">
+      <b-form @submit.prevent="addModal">
+        <b-form-group label="Client Owner" label-for="owner">
           <b-form-input
-            id="name-input"
+            id="owner"
             v-model="form.owner"
+            invalid-feedback="Owner is required"
             required
           ></b-form-input>
         </b-form-group>
         <b-form-group
           label="Client Name"
-          label-for="name-input"
+          label-for="client_name"
           :state="nameState"
           invalid-feedback="Client Name is required"
         >
           <b-form-input
-            id="name-input"
+            id="client_name"
             v-model="form.client_name"
             :state="nameState"
             required
@@ -31,12 +28,12 @@
         </b-form-group>
         <b-form-group
           label="Client Secret"
-          label-for="name-input"
+          label-for="client_secret"
           :state="secretState"
           invalid-feedback="Client Secret is required"
         >
           <b-form-input
-            id="name-input"
+            id="client_secret"
             v-model="form.client_secret"
             min="6"
             :state="secretState"
@@ -45,56 +42,40 @@
         </b-form-group>
         <b-form-group
           label="Expiry Time"
-          label-for="name-input"
+          label-for="client_secret_expires_at"
           invalid-feedback="Secret Expire is required"
         >
           <b-form-input
-            id="name-input"
+            id="client_secret_expires_at"
             v-model="form.client_secret_expires_at"
             required
           ></b-form-input>
         </b-form-group>
-        <b-form-group
-          label="Contact"
-          label-for="name-input"
-          invalid-feedback="Name is required"
-        >
-          <b-form-input
-            id="name-input"
-            v-model="form.contacts"
-            required
-          ></b-form-input>
+        <b-form-group label="Contact" label-for="contacts">
+          <b-form-input id="contacts" v-model="form.contacts"></b-form-input>
         </b-form-group>
-        <b-form-group
-          label="Subject type"
-          label-for="name-input"
-          invalid-feedback="Subject type is required"
-        >
+        <b-form-group label="Subject type" label-for="subject_type">
           <b-form-input
-            id="name-input"
+            id="subject_type"
             v-model="form.subject_type"
-            required
           ></b-form-input>
         </b-form-group>
         <b-form-group
           label="Terms of Service(Document URL)"
-          label-for="name-input"
-          invalid-feedback="Terms of service is required"
+          label-for="tos_uri"
         >
-          <b-form-input id="name-input" v-model="form.tos_uri"></b-form-input>
+          <b-form-input id="tos_uri" v-model="form.tos_uri"></b-form-input>
         </b-form-group>
-        <b-form-group
-          label="Policy"
-          label-for="name-input"
-          invalid-feedback="Policy URL is required"
-        >
+        <b-form-group label="Policy" label-for="policy_uri">
           <b-form-input
-            id="name-input"
+            id="policy_uri"
             v-model="form.policy_uri"
-            required
           ></b-form-input>
         </b-form-group>
-      </form>
+        <div class="text-center mb-1 pt-3">
+          <b-button type="submit" variant="primary">Add</b-button>
+        </div>
+      </b-form>
     </b-modal>
   </div>
 </template>

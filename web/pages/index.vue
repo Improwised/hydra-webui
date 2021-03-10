@@ -29,7 +29,9 @@ export default {
   },
   layout: 'client',
   async asyncData({ store }) {
-    await store.dispatch('getClientList')
+    await store.dispatch('getClientList').then((response) => {
+      console.log(response)
+    })
     return {}
   },
 }
