@@ -13,10 +13,11 @@ Web Management UI for Hydra oAuth Server
 https://www.ory.sh/hydra/docs/5min-tutorial/
 ```
 
-* Make .env.docker file in web directory with contents,
+## .env.docker
+* copy `.env.docker` to `.env` in web directory,
+
 ```console
-HYDRA_ADMIN_URL=http://hydra:4445
-PUBLIC_URL=http://hydra:4444
+HYDRA_PROXY_URL=http://localhost:4445
 ```
 
 
