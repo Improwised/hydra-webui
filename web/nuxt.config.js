@@ -41,6 +41,11 @@ export default {
     '@nuxtjs/axios',
   ],
 
+  // Public run time configuration
+  publicRuntimeConfig: {
+    HYDRA_PROXY_URL: process.env.HYDRA_PROXY_URL,
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
