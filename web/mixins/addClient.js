@@ -7,18 +7,21 @@ export default {
           this.$toasted.success('Client Added Successfully', {
             theme: 'bubble',
             position: 'top-right',
-            duration: 4000,
+            duration: 2000,
           })
           this.$nextTick(() => {
             this.$bvModal.hide('add-model')
           })
-          this.$router.go()
+          this.$store.dispatch('getClientList')
         })
         .catch((err) => {
-          this.$toasted.error(err.response.data.error_debug, {
+          const msg = err.response.data.error_hint
+            ? err.response.data.error_hint
+            : err.response.data.error
+          this.$toasted.error(msg, {
             theme: 'bubble',
             position: 'top-right',
-            duration: 5000,
+            duration: 2000,
           })
         })
     },

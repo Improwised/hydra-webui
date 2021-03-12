@@ -7,15 +7,15 @@ export default {
           this.$toasted.success('Client Deleted Successfully', {
             theme: 'bubble',
             position: 'top-right',
-            duration: 5000,
+            duration: 4000,
           })
-          this.$router.go()
+          this.$store.dispatch('getClientList')
         })
         .catch((err) => {
           this.$toasted.error(err.response.data.error_debug, {
             theme: 'bubble',
             position: 'top-right',
-            duration: 5000,
+            duration: 4000,
           })
         })
     },
