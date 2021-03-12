@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import List from '@/components/List/Table.vue'
-import Add from '@/components/List/Add.vue'
+import List from '@/components/Client/ListClient.vue'
+import Add from '@/components/Client/AddClient.vue'
 
 export default {
   components: {
@@ -29,10 +29,9 @@ export default {
   },
   layout: 'client',
   async asyncData({ store }) {
-    await store.dispatch('getClientList').then((response) => {
-      console.log(response)
-    })
+    await store.dispatch('getClientList')
     return {}
   },
+  watchQuery: true,
 }
 </script>

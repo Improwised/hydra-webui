@@ -3,7 +3,7 @@
     <!-- list table -->
     <b-container class="mt-3" fluid>
       <b-table
-        :items="items"
+        :items="clientList"
         :fields="fields"
         :current-page="currentPage"
         :per-page="perPage"
@@ -25,12 +25,15 @@
       <b-modal
         :id="deleteModal.id"
         :title="deleteModal.title"
+        centered
         ok-only
         @ok="delClient"
       >
-        <pre>Are you sure you want to delete ? </pre>
+        <pre>Are you sure you want to delete this client? </pre>
       </b-modal>
+      <!--  -->
     </b-container>
+    <!--  -->
     <div class="text-center">
       <b-pagination
         v-model="currentPage"
@@ -38,19 +41,21 @@
         :per-page="perPage"
         size="sm"
         align="center"
+        @change="onPageChange"
       ></b-pagination>
     </div>
+    <!--  -->
   </div>
 </template>
 <script>
-import deleteClient from '@/mixins/delete.js'
+import deleteClient from '~/mixins/deleteClient.js'
 export default {
   mixins: [deleteClient],
   data() {
     return {
       totalRows: this.totalRows,
       currentPage: 1,
-      perPage: 5,
+      perPage: 10,
       deleteModal: {
         id: 'info-modal',
         title: '',
@@ -66,28 +71,7 @@ export default {
           sortable: true,
         },
         {
-          key: 'owner',
-          sortable: true,
-        },
-        {
-          key: 'subject_type',
-          sortable: true,
-        },
-        {
-          key: 'client_secret_expires_at',
-          sortable: true,
-        },
-        {
-          key: 'tos_uri',
-          sortable: true,
-        },
-        {
-          key: 'policy_uri',
-          sortable: true,
-        },
-        {
-          key: 'contacts',
-          sortable: true,
+          key: 'grant_types',
         },
         {
           key: 'created_at',
@@ -100,11 +84,16 @@ export default {
       bordered: true,
       responsive: true,
       filter: null,
-      items: this.$store.getters.clients,
     }
   },
+  computed: {
+    clientList() {
+      return this.$store.getters.clients
+    },
+  },
   mounted() {
-    this.totalRows = this.items.length
+    this.totalRows = this.clientList.length
+    this.$router.push({ query: '' })
   },
   methods: {
     delClient() {
@@ -114,6 +103,9 @@ export default {
       this.deleteModal.title = `Delete: ${item.client_name}`
       this.deleteModal.content = item
       this.$root.$emit('bv::show::modal', this.deleteModal.id, button)
+    },
+    onPageChange(value) {
+      this.$router.push({ query: { page: value } })
     },
   },
 }
