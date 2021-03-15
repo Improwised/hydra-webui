@@ -19,19 +19,19 @@
 </template>
 
 <script>
-import List from '@/components/Client/ListClient.vue'
-import Add from '@/components/Client/AddClient.vue'
+import List from "@/components/Client/ListClient.vue";
+import Add from "@/components/Client/AddClient.vue";
 
 export default {
   components: {
     List,
     Add,
   },
-  layout: 'client',
+  layout: "client",
   async asyncData({ store }) {
-    await store.dispatch('getClientList')
-    return {}
+    await store.dispatch("getClientList");
+    return {};
   },
   watchQuery: true,
-}
+};
 </script>

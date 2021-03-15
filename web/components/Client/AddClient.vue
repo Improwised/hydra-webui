@@ -99,36 +99,36 @@
   </div>
 </template>
 <script>
-import addClient from '~/mixins/addClient.js'
+import addClient from "~/mixins/addClient.js";
 export default {
   mixins: [addClient],
   data() {
     return {
       form: {
-        client_id: '',
-        client_name: '',
-        client_secret: '',
-        scope: '',
+        client_id: "",
+        client_name: "",
+        client_secret: "",
+        scope: "",
         redirect_uris: [],
         request_uris: [],
         grant_types: [],
         allowed_cors_origins: [],
         audience: [],
       },
-    }
+    };
   },
   methods: {
     add() {
-      this.addClient(this.form)
+      this.addClient(this.form);
     },
     resetForm() {
-      this.form = {}
+      this.form = {};
     },
     validator(tag) {
       const pattern = '^(http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$' // eslint-disable-line
-      const regexp = new RegExp(pattern)
-      return regexp.test(tag)
+      const regexp = new RegExp(pattern);
+      return regexp.test(tag);
     },
   },
-}
+};
 </script>
