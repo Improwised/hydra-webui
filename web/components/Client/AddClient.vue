@@ -14,8 +14,8 @@
       <b-form @submit.prevent="add">
         <b-form-group label="Client Id:" label-for="client_id">
           <b-form-input id="client_id" v-model="form.client_id"></b-form-input>
-          <b-form-text id="client_id" class="mt-2">
-            Default will be taken if blank
+          <b-form-text id="client_id">
+            Default value will be taken if blank
           </b-form-text>
         </b-form-group>
         <b-form-group label="Client Name:" label-for="client_name">
@@ -40,6 +40,7 @@
             id="redirect_uris"
             v-model="form.redirect_uris"
             placeholder="https://example.com"
+            :tag-validator="validator"
             remove-on-delete
             tag-variant="primary"
             tag-pills
@@ -50,6 +51,7 @@
             id="request_uris"
             v-model="form.request_uris"
             placeholder="https://example.com"
+            :tag-validator="validator"
             remove-on-delete
             tag-variant="primary"
             tag-pills
@@ -121,6 +123,11 @@ export default {
     },
     resetForm() {
       this.form = {}
+    },
+    validator(tag) {
+      const pattern = '^(http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$' // eslint-disable-line
+      const regexp = new RegExp(pattern)
+      return regexp.test(tag)
     },
   },
 }

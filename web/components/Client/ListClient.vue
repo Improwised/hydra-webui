@@ -11,6 +11,15 @@
         :responsive="responsive"
         :filter="filter"
       >
+        <!-- <template #cell(client_id)="row">
+          <nuxt-link
+            :to="{
+              name: 'id',
+              params: { id: row.value },
+            }"
+            >{{ row.value }}</nuxt-link
+          >
+        </template> -->
         <template #cell(Action)="row">
           <b-button
             size="sm"
@@ -36,13 +45,15 @@
     <!--  -->
     <div class="text-center">
       <b-pagination
+        v-if="totalRows > 0"
         v-model="currentPage"
         :total-rows="totalRows"
         :per-page="perPage"
-        size="sm"
+        pills
         align="center"
         @change="onPageChange"
       ></b-pagination>
+      <span v-else>---</span>
     </div>
     <!--  -->
   </div>
@@ -53,7 +64,6 @@ export default {
   mixins: [deleteClient],
   data() {
     return {
-      totalRows: this.totalRows,
       currentPage: 1,
       perPage: 10,
       deleteModal: {
@@ -90,9 +100,11 @@ export default {
     clientList() {
       return this.$store.getters.clients
     },
+    totalRows() {
+      return this.clientList.length
+    },
   },
   mounted() {
-    this.totalRows = this.clientList.length
     this.$router.push({ query: '' })
   },
   methods: {
