@@ -4,7 +4,7 @@ export default {
       await this.$store
         .dispatch("deleteClient", data)
         .then(() => {
-          this.$toasted.success("Client Deleted Successfully", {
+          this.$toasted.success("Client deleted successfully", {
             theme: "bubble",
             position: "top-right",
             duration: 4000,

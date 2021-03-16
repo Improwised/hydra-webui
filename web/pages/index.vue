@@ -9,16 +9,17 @@
     >
       <template #header>
         <h3 class="mb-0 text-danger">Client List</h3>
-        <Add />
+        <b-button v-b-modal.add-model variant="primary">Create Client</b-button>
       </template>
       <List></List>
     </b-card>
+    <Add id="add-model" type="Add" />
   </div>
 </template>
 
 <script>
-import List from "@/components/Client/ListClient.vue";
-import Add from "@/components/Client/AddClient.vue";
+import List from "~/components/Client/ClientList.vue";
+import Add from "~/components/Client/ClientAddUpdate.vue";
 
 export default {
   components: {

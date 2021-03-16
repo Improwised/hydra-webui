@@ -1,19 +1,21 @@
 <template>
   <div>
     <!--  -->
-    <b-button v-b-modal.add-model variant="primary">Create Client</b-button>
-    <!--  -->
     <b-modal
-      id="add-model"
+      :id="id"
       ref="modal"
       size="lg"
       title="Add Client"
       hide-footer
       @hide="resetForm"
     >
-      <b-form @submit.prevent="add">
+      <b-form @submit.prevent="action">
         <b-form-group label="Client Id:" label-for="client_id">
-          <b-form-input id="client_id" v-model="form.client_id"></b-form-input>
+          <b-form-input
+            id="client_id"
+            v-model="form.client_id"
+            :disabled="type === 'Edit'"
+          ></b-form-input>
           <b-form-text id="client_id">
             Default value will be taken if blank
           </b-form-text>
@@ -91,7 +93,7 @@
           ></b-form-tags>
         </b-form-group>
         <div class="text-center mb-1 pt-3">
-          <b-button type="submit" variant="primary">Add</b-button>
+          <b-button type="submit" variant="primary">{{ type }}</b-button>
         </div>
       </b-form>
     </b-modal>
@@ -99,30 +101,41 @@
   </div>
 </template>
 <script>
-import addClient from "~/mixins/addClient.js";
+import addClient from "@/mixins/addClient.js";
+import editClient from "@/mixins/editClient.js";
 export default {
-  mixins: [addClient],
-  data() {
-    return {
-      form: {
-        client_id: "",
-        client_name: "",
-        client_secret: "",
-        scope: "",
-        redirect_uris: [],
-        request_uris: [],
-        grant_types: [],
-        allowed_cors_origins: [],
-        audience: [],
-      },
-    };
+  mixins: [addClient, editClient],
+  props: {
+    id: {
+      type: String,
+      default: "add-modal",
+    },
+    type: {
+      type: String,
+      default: "Add",
+    },
+    formData: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  computed: {
+    form() {
+      return Object.assign({}, this.formData);
+    },
   },
   methods: {
-    add() {
-      this.addClient(this.form);
+    action() {
+      if (this.type === "Add") {
+        this.addClient(this.form);
+      } else {
+        this.editClient(this.form);
+      }
     },
     resetForm() {
-      this.form = {};
+      if (this.type === "Add") {
+        this.form = {};
+      }
     },
     validator(tag) {
       const pattern = '^(http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$' // eslint-disable-line

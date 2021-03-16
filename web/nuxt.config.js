@@ -34,6 +34,16 @@ export default {
     "@nuxtjs/stylelint-module",
   ],
 
+  eslint: {
+    cache: true,
+    fix: true,
+    threads: true,
+  },
+
+  stylelint: {
+    fix: true,
+  },
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
