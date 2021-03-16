@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import Vue from 'vue'
+// import Vue from 'vue'
 
 // function parseObject(data) {
 //   let errors = ''
@@ -17,12 +17,11 @@ export default function ({ $axios, store, redirect, route, env, app }) {
   $axios.onResponse((response) => {
     return response
   })
-  $axios.onError((error) => {
-    console.log(error)
-    Vue.toasted.show(error, {
-      theme: 'bubble',
-      position: 'top-right',
-      duration: 5000,
-    })
-  })
+  // $axios.onError((error) => {
+  //   Vue.toasted.show(error.error_hint, {
+  //     theme: 'bubble',
+  //     position: 'top-right',
+  //     duration: 5000,
+  //   })
+  // })
 }

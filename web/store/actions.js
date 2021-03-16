@@ -1,4 +1,4 @@
-import { request } from '../store/api'
+import { request } from '@/store/api.js'
 export default {
   getClientList({ commit }) {
     return request(this.$axios, 'get', `/clients`)
