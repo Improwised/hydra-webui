@@ -1,5 +1,8 @@
 export default {
-  clients: (state) => {
-    return state && state.clients ? state.clients : null
+  clientsList: (state) => {
+    return state && state.clientsList ? state.clientsList : null;
   },
-}
+  client: (state) => {
+    return state && state.client ? state.client : null;
+  },
+};

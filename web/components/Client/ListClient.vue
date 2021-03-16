@@ -11,11 +11,20 @@
         :responsive="responsive"
         :filter="filter"
       >
+        <template #cell(client_id)="row">
+          <nuxt-link
+            :to="{
+              name: 'id',
+              params: { id: row.value },
+            }"
+            >{{ row.value }}</nuxt-link
+          >
+        </template>
         <template #cell(Action)="row">
           <b-button
             size="sm"
+            class="ml-2"
             variant="danger"
-            class="mr-3"
             @click="delBtn(row.item, row.index, $event.target)"
             >Delete</b-button
           >
@@ -36,77 +45,83 @@
     <!--  -->
     <div class="text-center">
       <b-pagination
+        v-if="totalRows > 0"
         v-model="currentPage"
         :total-rows="totalRows"
         :per-page="perPage"
-        size="sm"
+        pills
         align="center"
         @change="onPageChange"
       ></b-pagination>
+      <span v-else>---</span>
     </div>
     <!--  -->
   </div>
 </template>
 <script>
-import deleteClient from '~/mixins/deleteClient.js'
+import deleteClient from "~/mixins/deleteClient.js";
 export default {
   mixins: [deleteClient],
   data() {
     return {
-      totalRows: this.totalRows,
       currentPage: 1,
       perPage: 10,
       deleteModal: {
-        id: 'info-modal',
-        title: '',
-        content: '',
+        id: "info-modal",
+        title: "",
+        content: "",
       },
       fields: [
         {
-          key: 'client_id',
+          key: "client_id",
           sortable: true,
         },
         {
-          key: 'client_name',
+          key: "client_name",
           sortable: true,
         },
         {
-          key: 'grant_types',
+          key: "grant_types",
         },
         {
-          key: 'created_at',
+          key: "created_at",
           sortable: true,
         },
         {
-          key: 'Action',
+          key: "Action",
         },
       ],
       bordered: true,
       responsive: true,
       filter: null,
-    }
+    };
   },
   computed: {
     clientList() {
-      return this.$store.getters.clients
+      return this.$store.getters.clientsList;
+    },
+    totalRows() {
+      return this.clientList.length;
     },
   },
   mounted() {
-    this.totalRows = this.clientList.length
-    this.$router.push({ query: '' })
+    this.$router.push({ query: "" });
   },
   methods: {
+    edit() {
+      this.$root.$emit("bv::show::modal", "add-model");
+    },
     delClient() {
-      this.deleteClient(this.deleteModal.content.client_id)
+      this.deleteClient(this.deleteModal.content.client_id);
     },
     delBtn(item, index, button) {
-      this.deleteModal.title = `Delete: ${item.client_name}`
-      this.deleteModal.content = item
-      this.$root.$emit('bv::show::modal', this.deleteModal.id, button)
+      this.deleteModal.title = `Delete: ${item.client_name}`;
+      this.deleteModal.content = item;
+      this.$root.$emit("bv::show::modal", this.deleteModal.id, button);
     },
     onPageChange(value) {
-      this.$router.push({ query: { page: value } })
+      this.$router.push({ query: { page: value } });
     },
   },
-}
+};
 </script>

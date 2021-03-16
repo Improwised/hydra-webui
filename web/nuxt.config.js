@@ -1,16 +1,16 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'hydra-web',
+    title: "hydra-web",
     htmlAttrs: {
-      lang: 'en',
+      lang: "en",
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { hid: "description", name: "description", content: "" },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -18,8 +18,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/axios',
-    { src: '~/plugins/modules-with-no-ssr', ssr: false },
+    "~/plugins/axios",
+    { src: "~/plugins/modules-with-no-ssr", ssr: false },
+    { src: "~/plugins/filters" },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -28,17 +29,17 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
+    "@nuxtjs/eslint-module",
     // https://go.nuxtjs.dev/stylelint
-    '@nuxtjs/stylelint-module',
+    "@nuxtjs/stylelint-module",
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
-    'bootstrap-vue/nuxt',
+    "bootstrap-vue/nuxt",
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    "@nuxtjs/axios",
   ],
 
   // Public run time configuration
@@ -52,13 +53,13 @@ export default {
   },
 
   proxy: {
-    '/clients': process.env.HYDRA_PROXY_URL,
+    "/clients": process.env.HYDRA_PROXY_URL,
   },
 
   router: {
-    base: '/hydra' || '',
+    base: "/hydra" || "",
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-}
+};
