@@ -5,9 +5,7 @@
       header-tag="header"
       header-class="d-flex justify-content-between align-items-center"
       header-bg-variant="transparent"
-      body-class="custom-body p-0"
-      footer-tag="footer"
-      footer-class="custom-footer bt-1"
+      body-class="p-0"
     >
       <template #header>
         <h3 class="mb-0 text-danger">Client List</h3>
