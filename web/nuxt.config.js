@@ -64,6 +64,7 @@ export default {
 
   proxy: {
     "/clients": process.env.HYDRA_PROXY_URL,
+    "/oauth2": process.env.HYDRA_PROXY_URL,
   },
 
   router: {

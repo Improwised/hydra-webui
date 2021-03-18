@@ -124,9 +124,14 @@ export default {
       default: () => {},
     },
   },
-  computed: {
-    form() {
-      return Object.assign({}, this.formData);
+  data() {
+    return {
+      form: Object.assign({}, this.formData),
+    };
+  },
+  watch: {
+    formData(newvalue) {
+      this.form = Object.assign({}, newvalue);
     },
   },
   methods: {
