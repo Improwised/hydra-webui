@@ -9,9 +9,7 @@ export default {
             position: "top-right",
             duration: 2000,
           });
-          this.$nextTick(() => {
-            this.$bvModal.hide("edit-modal");
-          });
+          this.$bvModal.hide("edit-modal");
           this.$store.dispatch("getClientList");
         })
         .catch((err) => {

@@ -27,7 +27,11 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-form-group label="Client Secret:" label-for="client_secret">
+        <b-form-group
+          v-if="type === 'Add'"
+          label="Client Secret:"
+          label-for="client_secret"
+        >
           <b-form-input
             id="client_secret"
             v-model="form.client_secret"
@@ -76,6 +80,7 @@
           <b-form-tags
             id="allowed_cors_origins"
             v-model="form.allowed_cors_origins"
+            :tag-validator="validator"
             placeholder=""
             remove-on-delete
             tag-variant="primary"
