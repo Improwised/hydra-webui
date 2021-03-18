@@ -26,6 +26,7 @@ export default {
         return error;
       });
   },
+  // Not using
   updateClient({ dispatch }, data) {
     return request(this.$axios, "put", `/clients/${data.client_id}`, data);
   },
