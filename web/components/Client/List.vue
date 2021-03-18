@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- list table -->
+
     <b-container class="mt-3" fluid>
       <b-table
         :items="clientList"
@@ -34,24 +35,49 @@
           >
         </template>
       </b-table>
-      <!--  -->
     </b-container>
+
     <!--  -->
-    <div class="text-center">
-      <b-pagination
-        v-if="totalRows > 0"
-        v-model="currentPage"
-        :total-rows="totalRows"
-        :per-page="perPage"
-        pills
-        align="center"
-        @change="onPageChange"
-      ></b-pagination>
-      <span v-else>---</span>
+
+    <div class="p-3">
+      <div class="row">
+        <div class="col-4 d-flex align-items-center justify-content-start">
+          <div data-test="total-count">
+            <strong>Total Count:</strong>
+            {{ totalRows }}
+          </div>
+        </div>
+        <div class="col-4 d-flex align-items-center justify-content-center">
+          <b-pagination
+            v-if="totalRows > 0"
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            pills
+            align="center"
+            @change="onPageChange"
+          ></b-pagination>
+        </div>
+        <div class="col-4 d-flex align-items-center justify-content-end">
+          <b-form-select
+            v-model="perPage"
+            :options="[5, 10, 15]"
+            style="width: 70px"
+            class="form-control"
+          ></b-form-select>
+        </div>
+      </div>
     </div>
+
     <!--  -->
+
     <Add id="edit-modal" type="Edit" :form-data="clientData" />
+
+    <!--  -->
+
     <ClientDetail :client-data="clientData" />
+
+    <!--  -->
   </div>
 </template>
 <script>
@@ -70,11 +96,6 @@ export default {
     return {
       currentPage: 1,
       perPage: 10,
-      deleteModal: {
-        id: "info-modal",
-        title: "",
-        content: "",
-      },
       fields: [
         {
           key: "client_id",
