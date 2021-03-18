@@ -1,15 +1,15 @@
 export default {
   methods: {
-    async addClient(data) {
+    async editClient(data) {
       await this.$store
-        .dispatch("addClient", data)
+        .dispatch("updateClient", data)
         .then(() => {
-          this.$toasted.success("Client added successfully", {
+          this.$toasted.success("Client updated successfully", {
             theme: "bubble",
             position: "top-right",
             duration: 2000,
           });
-          this.$bvModal.hide("add-model");
+          this.$bvModal.hide("edit-modal");
           this.$store.dispatch("getClientList");
         })
         .catch((err) => {

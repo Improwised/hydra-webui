@@ -13,11 +13,11 @@ export default {
   addClient({ dispatch }, data) {
     return request(this.$axios, "post", `/clients`, data);
   },
-  deleteClient({ dispatch }, data) {
-    return request(this.$axios, "delete", `/clients/${data}`);
+  deleteClient({ dispatch }, id) {
+    return request(this.$axios, "delete", `/clients/${id}`);
   },
-  getClientDetails({ commit }, data) {
-    return request(this.$axios, "get", `/clients/${data}`)
+  getClientDetails({ commit }, id) {
+    return request(this.$axios, "get", `/clients/${id}`)
       .then((response) => {
         commit("client", response);
       })
@@ -25,5 +25,8 @@ export default {
         commit("client", []);
         return error;
       });
+  },
+  updateClient({ dispatch }, data) {
+    return request(this.$axios, "put", `/clients/${data.client_id}`, data);
   },
 };

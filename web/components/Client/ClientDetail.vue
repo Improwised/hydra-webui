@@ -9,7 +9,7 @@
             </td>
 
             <td class="w-50">
-              {{ client }}
+              {{ client ? client : "-" }}
             </td>
           </tr>
         </tbody>

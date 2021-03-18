@@ -22,10 +22,18 @@
         </template>
         <template #cell(Action)="row">
           <b-button
+            :id="row.index"
+            size="sm"
+            class="w-25"
+            variant="info"
+            @click="edit(row.index, row.item)"
+            >Edit</b-button
+          >
+          <b-button
             size="sm"
             class="ml-2"
             variant="danger"
-            @click="delBtn(row.item, row.index, $event.target)"
+            @click="delBtn(row.item)"
             >Delete</b-button
           >
         </template>
@@ -56,11 +64,17 @@
       <span v-else>---</span>
     </div>
     <!--  -->
+    <Add id="edit-modal" type="Edit" :form-data="clientData" />
   </div>
 </template>
 <script>
+import Add from "~/components/Client/ClientAddUpdate.vue";
 import deleteClient from "~/mixins/deleteClient.js";
+
 export default {
+  components: {
+    Add,
+  },
   mixins: [deleteClient],
   data() {
     return {
@@ -94,6 +108,7 @@ export default {
       bordered: true,
       responsive: true,
       filter: null,
+      clientData: {},
     };
   },
   computed: {
@@ -108,16 +123,17 @@ export default {
     this.$router.push({ query: "" });
   },
   methods: {
-    edit() {
-      this.$root.$emit("bv::show::modal", "add-model");
+    edit(index, data) {
+      this.clientData = data;
+      this.$root.$emit("bv::show::modal", "edit-modal", index);
     },
     delClient() {
       this.deleteClient(this.deleteModal.content.client_id);
     },
-    delBtn(item, index, button) {
+    delBtn(item) {
       this.deleteModal.title = `Delete: ${item.client_name}`;
       this.deleteModal.content = item;
-      this.$root.$emit("bv::show::modal", this.deleteModal.id, button);
+      this.$root.$emit("bv::show::modal", this.deleteModal.id);
     },
     onPageChange(value) {
       this.$router.push({ query: { page: value } });
