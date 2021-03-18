@@ -33,21 +33,11 @@
             size="sm"
             class="ml-2"
             variant="danger"
-            @click="delBtn(row.item)"
+            @click="onDeleteClient(row.item)"
             >Delete</b-button
           >
         </template>
       </b-table>
-      <!-- delete modal -->
-      <b-modal
-        :id="deleteModal.id"
-        :title="deleteModal.title"
-        centered
-        ok-only
-        @ok="delClient"
-      >
-        <pre>Are you sure you want to delete this client? </pre>
-      </b-modal>
       <!--  -->
     </b-container>
     <!--  -->
@@ -127,13 +117,34 @@ export default {
       this.clientData = data;
       this.$root.$emit("bv::show::modal", "edit-modal", index);
     },
-    delClient() {
-      this.deleteClient(this.deleteModal.content.client_id);
-    },
-    delBtn(item) {
-      this.deleteModal.title = `Delete: ${item.client_name}`;
-      this.deleteModal.content = item;
-      this.$root.$emit("bv::show::modal", this.deleteModal.id);
+    onDeleteClient(item) {
+      const clientId = item.client_id;
+      const h = this.$createElement;
+      this.$bvModal
+        .msgBoxConfirm(
+          h("div", [
+            h("p", [
+              " Are you sure you want to delete client with name ",
+              h("strong", item.client_name),
+              " ? ",
+            ]),
+          ]),
+          {
+            title: "Are you sure?",
+            buttonSize: "sm",
+            okVariant: "danger",
+            okTitle: "Delete",
+            cancelTitle: "Cancel",
+            footerClass: "p-2",
+            hideHeaderClose: false,
+            centered: true,
+          }
+        )
+        .then((value) => {
+          if (value) {
+            this.deleteClient(clientId);
+          }
+        });
     },
     onPageChange(value) {
       this.$router.push({ query: { page: value } });
