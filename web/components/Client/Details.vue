@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-modal id="client-details" size="xl" title="Client details" hide-footer>
     <div class="p-3">
       <table class="table table-bordered m-0">
         <tbody>
@@ -9,20 +9,22 @@
             </td>
 
             <td class="w-50">
-              {{ client ? client : "-" }}
+              {{ client | filterValues(index) }}
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
+  </b-modal>
 </template>
 
 <script>
 export default {
-  computed: {
-    clientData() {
-      return this.$store.getters.client;
+  props: {
+    clientData: {
+      type: Object,
+      required: true,
+      default: () => {},
     },
   },
 };
