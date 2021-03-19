@@ -12,13 +12,9 @@
         :filter="filter"
       >
         <template #cell(client_id)="row">
-          <nuxt-link
-            :to="{
-              name: 'id',
-              params: { id: row.value },
-            }"
-            >{{ row.value }}</nuxt-link
-          >
+          <b-link @click="showDetails(row.index, row.item)">{{
+            row.value
+          }}</b-link>
         </template>
         <template #cell(Action)="row">
           <b-button
@@ -55,15 +51,19 @@
     </div>
     <!--  -->
     <Add id="edit-modal" type="Edit" :form-data="clientData" />
+    <ClientDetail :client-data="clientData" />
   </div>
 </template>
 <script>
-import Add from "~/components/Client/ClientAddUpdate.vue";
-import deleteClient from "~/mixins/deleteClient.js";
+import ClientDetail from "@/components/Client/Details.vue";
+import Add from "@/components/Client/AddUpdate.vue";
+import deleteClient from "@/mixins/deleteClient.js";
+import moment from "moment";
 
 export default {
   components: {
     Add,
+    ClientDetail,
   },
   mixins: [deleteClient],
   data() {
@@ -86,10 +86,16 @@ export default {
         },
         {
           key: "grant_types",
+          formatter: (value) => {
+            return value.length ? value.join() : "-";
+          },
         },
         {
           key: "created_at",
           sortable: true,
+          formatter: (value) => {
+            return moment(value).local().format("DD/MM/YYYY, h:mm:ss A");
+          },
         },
         {
           key: "Action",
@@ -113,6 +119,10 @@ export default {
     this.$router.push({ query: "" });
   },
   methods: {
+    showDetails(index, data) {
+      this.clientData = data;
+      this.$root.$emit("bv::show::modal", "client-details", index);
+    },
     edit(index, data) {
       this.clientData = data;
       this.$root.$emit("bv::show::modal", "edit-modal", index);

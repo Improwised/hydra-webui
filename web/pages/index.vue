@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import List from "~/components/Client/ClientList.vue";
-import Add from "~/components/Client/ClientAddUpdate.vue";
+import List from "~/components/Client/List.vue";
+import Add from "~/components/Client/AddUpdate.vue";
 
 export default {
   components: {
