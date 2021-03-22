@@ -24,7 +24,6 @@
           <b-form-input
             id="client_name"
             v-model="form.client_name"
-            required
           ></b-form-input>
         </b-form-group>
         <b-form-group
@@ -143,7 +142,7 @@ export default {
       }
     },
     validator(tag) {
-      const pattern = '^(http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$' // eslint-disable-line
+      const pattern = '^(http|https):\/\/' // eslint-disable-line
       const regexp = new RegExp(pattern);
       return regexp.test(tag);
     },

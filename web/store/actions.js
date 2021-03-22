@@ -37,19 +37,4 @@ export default {
       `/oauth2/auth/sessions/consent?subject=${data.client_id}`
     );
   },
-  getConsentRequest({ dispatch }, data) {
-    return request(
-      this.$axios,
-      "get",
-      `/oauth2/auth/requests/consent?consent_challenge=${data.client_name}`
-    );
-  },
-  acceptConsentSession({ dispatch }, { id, data }) {
-    return request(
-      this.$axios,
-      "put",
-      `/oauth2/auth/requests/consent/accept?consent_challenge=${id}`,
-      data
-    );
-  },
 };

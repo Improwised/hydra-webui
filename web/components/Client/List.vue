@@ -142,8 +142,8 @@ export default {
       //   },
       // };
       // this.$store.dispatch("acceptConsentSession", { id, data1 });
-      // this.$store.dispatch("consentSession", data);
-      this.$store.dispatch("getConsentRequest", data);
+      this.$store.dispatch("consentSession", data);
+      // this.$store.dispatch("getConsentRequest", data);
     },
     showDetails(index, data) {
       this.clientData = data;
