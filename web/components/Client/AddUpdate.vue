@@ -24,6 +24,7 @@
           <b-form-input
             id="client_name"
             v-model="form.client_name"
+            required
           ></b-form-input>
         </b-form-group>
         <b-form-group
@@ -35,6 +36,7 @@
             id="client_secret"
             v-model="form.client_secret"
             minlength="6"
+            required
           ></b-form-input>
         </b-form-group>
         <b-form-group label="Scope:" label-for="scope">
