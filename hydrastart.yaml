@@ -34,19 +34,19 @@ services:
     restart: unless-stopped
     networks:
       - hydraguide
-  gitea:
-    image: gitea/gitea:latest
+  # gitea:
+  #   image: gitea/gitea:latest
     # hostname: gitea.example.com
-    environment:
-      - USER_UID=1000
-      - USER_GID=1000
-    restart: always
-    networks:
-      - hydraguide
-    volumes:
-      - ./gitea:/data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - "3000:3000"
-      - "2228:22"
+    # environment:
+    #   - USER_UID=1000
+    #   - USER_GID=1000
+    # restart: always
+    # networks:
+    #   - hydraguide
+    # volumes:
+    #   - ./gitea:/data
+    #   - /etc/timezone:/etc/timezone:ro
+    #   - /etc/localtime:/etc/localtime:ro
+    # ports:
+    #   - "3000:3000"
+    #   - "2228:22"

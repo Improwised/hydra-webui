@@ -104,9 +104,6 @@ export default {
           },
         },
         {
-          key: "Consent_session",
-        },
-        {
           key: "Action",
         },
       ],
@@ -128,23 +125,6 @@ export default {
     this.$router.push({ query: "" });
   },
   methods: {
-    consentSession(data) {
-      // const id = data.client_id;
-      // const data1 = {
-      //   grant_access_token_audience: ["abc"],
-      //   grant_scope: ["refresh_token"],
-      //   handled_at: "2021-03-17T17:13:19Z",
-      //   remember: true,
-      //   remember_for: 0,
-      //   session: {
-      //     access_token: { abc: "anc" },
-      //     id_token: { asdflasdf: "abc" },
-      //   },
-      // };
-      // this.$store.dispatch("acceptConsentSession", { id, data1 });
-      this.$store.dispatch("consentSession", data);
-      // this.$store.dispatch("getConsentRequest", data);
-    },
     showDetails(index, data) {
       this.clientData = data;
       this.$root.$emit("bv::show::modal", "client-details", index);

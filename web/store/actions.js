@@ -30,11 +30,4 @@ export default {
   updateClient({ dispatch }, data) {
     return request(this.$axios, "put", `/clients/${data.client_id}`, data);
   },
-  consentSession({ dispatch }, data) {
-    return request(
-      this.$axios,
-      "get",
-      `/oauth2/auth/sessions/consent?subject=${data.client_id}`
-    );
-  },
 };
