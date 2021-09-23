@@ -1,41 +1,42 @@
 <template>
-  <div>
+  <div class="mt-4">
     <!-- list table -->
 
-    <b-container class="mt-3" fluid>
-      <b-table
-        :items="clientList"
-        :fields="fields"
-        :current-page="currentPage"
-        :per-page="perPage"
-        :bordered="bordered"
-        :responsive="responsive"
-        :filter="filter"
-      >
-        <template #cell(client_id)="row">
-          <b-link @click="showDetails(row.index, row.item)">{{
-            row.value
-          }}</b-link>
-        </template>
-        <template #cell(Action)="row">
-          <b-button
-            :id="row.index"
-            size="sm"
-            class="w-25"
-            variant="info"
-            @click="edit(row.index, row.item)"
-            >Edit</b-button
-          >
-          <b-button
-            size="sm"
-            class="ml-2"
-            variant="danger"
-            @click="onDeleteClient(row.item)"
-            >Delete</b-button
-          >
-        </template>
-      </b-table>
-    </b-container>
+    <b-table
+      :items="clientList"
+      :fields="fields"
+      :current-page="currentPage"
+      :per-page="perPage"
+      :filter="filter"
+      head-variant="light"
+      table-variant="light"
+      no-border-collapse="true"
+      bordered="true"
+      responsive="true"
+    >
+      <template #cell(client_id)="row">
+        <b-link @click="showDetails(row.index, row.item)">{{
+          row.value
+        }}</b-link>
+      </template>
+      <template #cell(Action)="row">
+        <b-button
+          :id="row.index"
+          size="sm"
+          class="w-25"
+          variant="info"
+          @click="edit(row.index, row.item)"
+          >Edit</b-button
+        >
+        <b-button
+          size="sm"
+          class="ml-2"
+          variant="danger"
+          @click="onDeleteClient(row.item)"
+          >Delete</b-button
+        >
+      </template>
+    </b-table>
 
     <!--  -->
 
@@ -71,7 +72,7 @@
 
     <!--  -->
 
-    <Add id="edit-modal" type="Edit" :form-data="clientData" />
+    <AddUpdate id="edit-modal" type="Edit" :form-data="clientData" />
 
     <!--  -->
 
@@ -82,13 +83,13 @@
 </template>
 <script>
 import ClientDetail from "@/components/Client/Details.vue";
-import Add from "@/components/Client/AddUpdate.vue";
+import AddUpdate from "@/components/Client/AddUpdate.vue";
 import deleteClient from "@/mixins/deleteClient.js";
 import moment from "moment";
 
 export default {
   components: {
-    Add,
+    AddUpdate,
     ClientDetail,
   },
   mixins: [deleteClient],
@@ -105,11 +106,14 @@ export default {
           key: "client_name",
           sortable: true,
         },
+        // {
+        //   key: "grant_types",
+        //   formatter: (value) => {
+        //     return value.length ? value.join() : "-";
+        //   },
+        // },
         {
-          key: "grant_types",
-          formatter: (value) => {
-            return value.length ? value.join() : "-";
-          },
+          key: "token_endpoint_auth_method",
         },
         {
           key: "created_at",

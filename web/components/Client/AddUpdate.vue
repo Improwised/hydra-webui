@@ -39,6 +39,44 @@
             required
           ></b-form-input>
         </b-form-group>
+        <b-form-group label="Token Endpoint Auth method">
+          <b-form-select
+            v-model="form.token_endpoint_auth_method"
+            :options="[
+              { value: 'client_secret_post', text: 'client_secret_post' },
+              { value: 'client_secret_basic', text: 'client_secret_basic' },
+              {
+                value: 'private_key_jwt',
+                text: 'private_key_jwt',
+              },
+            ]"
+          ></b-form-select>
+        </b-form-group>
+        <b-form-group
+          v-if="form.token_endpoint_auth_method === 'private_key_jwt'"
+          label="Jwks:"
+          label-for="Jwks"
+        >
+          <b-form-input
+            id="Jwks"
+            v-model="form.jwks"
+            type="Object"
+            placeholder="{}"
+          ></b-form-input>
+          <b-form-text id="input-live-help"
+            >Input type must be type Object
+            <a href="https://www.ory.sh/hydra/docs/reference/api/#tag/public"
+              >Refer this.</a
+            ></b-form-text
+          >
+        </b-form-group>
+        <b-form-group
+          v-if="form.token_endpoint_auth_method === 'private_key_jwt'"
+          label="Jwk URI:"
+          label-for="Jwk URI"
+        >
+          <b-form-input id="Jwk URI" v-model="form.jwks_uri"></b-form-input>
+        </b-form-group>
         <b-form-group label="Scope:" label-for="scope">
           <b-form-input id="scope" v-model="form.scope"></b-form-input>
         </b-form-group>
@@ -149,7 +187,7 @@ export default {
       }
     },
     validator(tag) {
-      const pattern = '^(http|https):\/\/' // eslint-disable-line
+      const pattern = "^(http|https)://"; // eslint-disable-line
       const regexp = new RegExp(pattern);
       return regexp.test(tag);
     },
