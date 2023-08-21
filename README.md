@@ -3,7 +3,7 @@ Web Management UI for Hydra oAuth Server
 
 ## Prerequisites
 
-* Node.js
+* Node.js - Version 12.14.1 
 * Docker compose
 
 # Compose setup
@@ -154,6 +154,3 @@ OpenID Connect Auto Discovery URL: http://127.0.0.1:4444/.well-known/openid-conf
 ```
 
 * Log-out of the gitea and you should see sign-in with OpenID connect.
-
-
-
