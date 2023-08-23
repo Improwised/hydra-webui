@@ -1,0 +1,39 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      timeout-minutes: 5
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+      timeout-minutes: 5
+
+    - name: Get Short SHA
+      id: vars
+      run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      timeout-minutes: 5
+
+    - name: Get Epoch
+      id: epoch
+      run: echo "epoch=$(date +%s)">> $GITHUB_OUTPUT
+      timeout-minutes: 5
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        context: web/
+        push: true
+        tags: "improwised/hydra-webui:${{ github.ref_name }}-${{ steps.vars.outputs.sha_short }}-${{ steps.epoch.outputs.epoch }}"
+      timeout-minutes: 10
