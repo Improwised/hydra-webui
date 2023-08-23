@@ -14,20 +14,20 @@ services:
     # volumes:
     #   - database_postgres:/var/lib/postgresql/data:rw
 
-  # web:
-  #   build:
-  #     context: web/.
-  #     args:
-  #       BUILD_TYPE: docker
-  #   ports:
-  #     - "3000:80"
-  #   depends_on:
-  #     - hydra
-  #   links:
-  #     - hydra
-  #   environment:
-  #     - HYDRA_ADMIN_URL=http://hydra:4445
-  #     - PUBLIC_URL=http://hydra:4444
+  web:
+    build:
+      context: web/.
+      args:
+        BUILD_TYPE: docker
+    ports:
+      - "3000:80"
+    depends_on:
+      - hydra
+    links:
+      - hydra
+    environment:
+      - HYDRA_ADMIN_URL=http://hydra:4445
+      - PUBLIC_URL=http://hydra:4444
 
   hydra-migrate:
     image: oryd/hydra:1.4.8
@@ -39,7 +39,7 @@ services:
     #   - intranet
     restart: on-failure
     environment:
-      - DSN=postgres://postgres:postgres@db:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
+      - DSN=postgres://postgres:postgres@db:5432/hydra
       - LOG_LEVEL=debug
       - HYDRA_SYSTEM_SECRET=youReallyNeedToChangeThis
     command:
@@ -57,7 +57,7 @@ services:
       - hydra-migrate
     environment:
       - URLS_SELF_ISSUER=http://127.0.0.1:4444
-      - DSN=postgres://postgres:postgres@db:5432/hydra?sslmode=disable&max_conns=20&max_idle_conns=4
+      - DSN=postgres://postgres:postgres@db:5432/hydra
       - SECRETS_SYSTEM=youReallyNeedToChangeThis
       - OIDC_SUBJECT_IDENTIFIERS_SUPPORTED_TYPES=public,pairwise
       - OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT=youReallyNeedToChangeThis
@@ -73,13 +73,13 @@ services:
     #     source: ./hydraConfig
     #     target: /etc/config/hydra
 
-  consent:
-    environment:
-      - HYDRA_ADMIN_URL=http://hydra:4445
-    image: oryd/hydra-login-consent-node:v1.3.2
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
+  # consent:
+  #   environment:
+  #     - HYDRA_ADMIN_URL=http://hydra:4445
+  #   image: oryd/hydra-login-consent-node:v1.3.2
+  #   ports:
+  #     - "3000:3000"
+  #   restart: unless-stopped
 
 #
 # volumes:
