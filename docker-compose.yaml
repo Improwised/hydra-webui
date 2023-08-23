@@ -20,7 +20,7 @@ services:
       args:
         BUILD_TYPE: docker
     ports:
-      - "7000:80"
+      - "3000:80"
     depends_on:
       - hydra
     links:
