@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM node:12.14-alpine
 
 RUN mkdir -p /usr/src/app
 
@@ -29,7 +29,7 @@ RUN npm install
 COPY . /usr/src/app
 
 ARG BUILD_TYPE
-COPY .env.$BUILD_TYPE /usr/src/app/.env
+COPY .env /usr/src/app/.env
 
 RUN npm run build
 
