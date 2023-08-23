@@ -18,7 +18,7 @@ https://www.ory.sh/hydra/docs/5min-tutorial/
 
 ```console
 HYDRA_PROXY_URL=http://localhost:4445
-PORT:7000
+PORT=3000
 ```
 
 
