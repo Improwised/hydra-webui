@@ -57,8 +57,8 @@ docker rm <container-id>
 
 * copy `.env.example` to `.env`.
 ```
-HYDRA_PROXY_URL=http://localhost:4445
-PORT=7000
+HYDRA_PROXY_URL=http://hydra:4445
+PORT=3000
 ```
 * `HYDRA_PROXY_URL`: It is Hydra Admin url.
 
@@ -90,7 +90,7 @@ $ npm start
 $ npm run dev
 ```
 
-After this application will run at `http://localhost:3000/hydra`.
+After this application will run at `http://localhost:3000/`.
   
 ## Perform the OAuth 2.0 authorization code grant
 * Go to root folder and run following commands.
