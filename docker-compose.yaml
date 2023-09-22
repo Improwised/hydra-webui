@@ -28,6 +28,7 @@ services:
     environment:
       - HYDRA_ADMIN_URL=http://hydra:4445
       - PUBLIC_URL=http://hydra:4444
+      - HYDRA_PROXY_URL=http://hydra:4445
 
   hydra-migrate:
     image: oryd/hydra:1.4.8

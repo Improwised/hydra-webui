@@ -67,9 +67,10 @@ export default {
     "/oauth2": process.env.HYDRA_PROXY_URL,
   },
 
-  router: {
-    base: "/hydra" || "",
-  },
+  /* application run at root by default */
+  // router: {
+  //   base: "/hydra" || "",
+  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
