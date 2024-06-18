@@ -36,7 +36,7 @@
             id="client_secret"
             v-model="form.client_secret"
             minlength="6"
-            required
+            :required="isSecretRequired"
           ></b-form-input>
         </b-form-group>
         <b-form-group label="Token Endpoint Auth method">
@@ -48,6 +48,10 @@
               {
                 value: 'private_key_jwt',
                 text: 'private_key_jwt',
+              },
+              {
+                value: 'none',
+                text: 'none',
               },
             ]"
           ></b-form-select>
@@ -167,6 +171,11 @@ export default {
     return {
       form: Object.assign({}, this.formData),
     };
+  },
+  computed: {
+    isSecretRequired() {
+      return this.form.token_endpoint_auth_method !== "none";
+    },
   },
   watch: {
     formData(newvalue) {
