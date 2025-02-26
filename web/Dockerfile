@@ -6,9 +6,13 @@ WORKDIR /usr/src/app
 
 ENV DOCKERIZE_VERSION v0.6.0
 
+# Add build dependencies before npm install
 RUN apk update \
+  && apk add --no-cache --virtual .build-deps \
+    make \
+    g++ \
   && apk add --no-cache --virtual .run-deps \
-  curl nginx supervisor nodejs npm \
+    curl nginx supervisor nodejs npm \
   && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
   && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
   && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -23,7 +27,9 @@ RUN chown -R nginx:nginx /var/www \
 # Install app dependencies
 COPY *.json /usr/src/app/
 
-RUN npm install
+RUN npm install \
+  # Remove build dependencies after npm install to reduce image size
+  && apk del .build-deps
 
 # # Bundle app source
 COPY . /usr/src/app
