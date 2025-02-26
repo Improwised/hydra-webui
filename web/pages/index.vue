@@ -27,9 +27,8 @@ export default {
     Add,
   },
   layout: "client",
-  async asyncData({ store }) {
-    await store.dispatch("getClientList");
-    return {};
+  async fetch() {
+    await this.$store.dispatch("getClientList");
   },
   watchQuery: true,
 };
