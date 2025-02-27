@@ -1,86 +1,84 @@
 <template>
   <div class="mt-4">
-    <!-- Add loading state -->
-    <b-overlay :show="isLoading" rounded="sm">
-      <!-- list table -->
-      <b-table
-        :items="clientList"
-        :fields="fields"
-        :current-page="currentPage"
-        :per-page="perPage"
-        :filter="filter"
-        head-variant="light"
-        table-variant="light"
-        no-border-collapse="true"
-        bordered="true"
-        responsive="true"
-      >
-        <template #cell(client_id)="row">
-          <b-link @click="showDetails(row.index, row.item)">{{
-            row.value
-          }}</b-link>
-        </template>
-        <template #cell(Action)="row">
-          <b-button
-            :id="row.index"
-            size="sm"
-            class="w-25"
-            variant="info"
-            @click="edit(row.index, row.item)"
-            >Edit</b-button
-          >
-          <b-button
-            size="sm"
-            class="ml-2"
-            variant="danger"
-            @click="onDeleteClient(row.item)"
-            >Delete</b-button
-          >
-        </template>
-      </b-table>
+    <!-- list table -->
 
-      <!--  -->
+    <b-table
+      :items="clientList"
+      :fields="fields"
+      :current-page="currentPage"
+      :per-page="perPage"
+      :filter="filter"
+      head-variant="light"
+      table-variant="light"
+      no-border-collapse="true"
+      bordered="true"
+      responsive="true"
+    >
+      <template #cell(client_id)="row">
+        <b-link @click="showDetails(row.index, row.item)">{{
+          row.value
+        }}</b-link>
+      </template>
+      <template #cell(Action)="row">
+        <b-button
+          :id="row.index"
+          size="sm"
+          class="w-25"
+          variant="info"
+          @click="edit(row.index, row.item)"
+          >Edit</b-button
+        >
+        <b-button
+          size="sm"
+          class="ml-2"
+          variant="danger"
+          @click="onDeleteClient(row.item)"
+          >Delete</b-button
+        >
+      </template>
+    </b-table>
 
-      <div class="p-3">
-        <div class="row">
-          <div class="col-4 d-flex align-items-center justify-content-start">
-            <div data-test="total-count">
-              <strong>Total Count:</strong>
-              {{ totalRows }}
-            </div>
-          </div>
-          <div class="col-4 d-flex align-items-center justify-content-center">
-            <b-pagination
-              v-if="totalRows > 0"
-              v-model="currentPage"
-              :total-rows="totalRows"
-              :per-page="perPage"
-              pills
-              align="center"
-              @change="onPageChange"
-            ></b-pagination>
-          </div>
-          <div class="col-4 d-flex align-items-center justify-content-end">
-            <b-form-select
-              v-model="perPage"
-              :options="[5, 10, 15]"
-              style="width: 70px"
-              class="form-control"
-            ></b-form-select>
+    <!--  -->
+
+    <div class="p-3">
+      <div class="row">
+        <div class="col-4 d-flex align-items-center justify-content-start">
+          <div data-test="total-count">
+            <strong>Total Count:</strong>
+            {{ totalRows }}
           </div>
         </div>
+        <div class="col-4 d-flex align-items-center justify-content-center">
+          <b-pagination
+            v-if="totalRows > 0"
+            v-model="currentPage"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            pills
+            align="center"
+            @change="onPageChange"
+          ></b-pagination>
+        </div>
+        <div class="col-4 d-flex align-items-center justify-content-end">
+          <b-form-select
+            v-model="perPage"
+            :options="[5, 10, 15]"
+            style="width: 70px"
+            class="form-control"
+          ></b-form-select>
+        </div>
       </div>
+    </div>
 
-      <!--  -->
+    <!--  -->
 
-      <AddUpdate id="edit-modal" type="Edit" :form-data="clientData" />
+    <AddUpdate id="edit-modal" type="Edit" :form-data="clientData" />
 
-      <!--  -->
+    <!--  -->
 
-      <ClientDetail :client-data="clientData" />
+    <ClientDetail :client-data="clientData" />
 
-      <!--  -->
-    </b-overlay>
+    <!--  -->
   </div>
 </template>
 <script>
@@ -97,7 +95,6 @@ export default {
   mixins: [deleteClient],
   data() {
     return {
-      isLoading: true,
       currentPage: 1,
       perPage: 10,
       fields: [
@@ -143,19 +140,8 @@ export default {
       return this.clientList.length;
     },
   },
-  async created() {
-    try {
-      await this.$store.dispatch("getClientList");
-    } catch (error) {
-      console.error("Failed to fetch client list:", error);
-      this.$toasted.error("Failed to load clients", {
-        theme: "bubble",
-        position: "top-right",
-        duration: 4000,
-      });
-    } finally {
-      this.isLoading = false;
-    }
+  mounted() {
+    this.$router.push({ query: "" });
   },
   methods: {
     showDetails(index, data) {
