@@ -27,18 +27,6 @@
             required
           ></b-form-input>
         </b-form-group>
-        <b-form-group
-          v-if="type === 'Add'"
-          label="Client Secret:"
-          label-for="client_secret"
-        >
-          <b-form-input
-            id="client_secret"
-            v-model="form.client_secret"
-            minlength="6"
-            required
-          ></b-form-input>
-        </b-form-group>
         <b-form-group label="Token Endpoint Auth method">
           <b-form-select
             v-model="form.token_endpoint_auth_method"
@@ -49,8 +37,28 @@
                 value: 'private_key_jwt',
                 text: 'private_key_jwt',
               },
+              {
+                value: 'none',
+                text: 'none',
+              },
             ]"
           ></b-form-select>
+        </b-form-group>
+        <b-form-group
+          v-if="
+            type === 'Add' &&
+            form.token_endpoint_auth_method &&
+            form.token_endpoint_auth_method !== 'none'
+          "
+          label="Client Secret:"
+          label-for="client_secret"
+        >
+          <b-form-input
+            id="client_secret"
+            v-model="form.client_secret"
+            minlength="6"
+            :required="form.token_endpoint_auth_method !== 'none'"
+          ></b-form-input>
         </b-form-group>
         <b-form-group
           v-if="form.token_endpoint_auth_method === 'private_key_jwt'"
